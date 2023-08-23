@@ -1,0 +1,11 @@
+c:\cygwin64\home\Cody\dev\lalala-fsharp\ApexLexer\bin\Debug\net6.0\ApexLexer.deps.json
+c:\cygwin64\home\Cody\dev\lalala-fsharp\ApexLexer\bin\Debug\net6.0\ApexLexer.dll
+c:\cygwin64\home\Cody\dev\lalala-fsharp\ApexLexer\bin\Debug\net6.0\ApexLexer.pdb
+c:\cygwin64\home\Cody\dev\lalala-fsharp\ApexLexer\bin\Debug\net6.0\ApexLexer.xml
+c:\cygwin64\home\Cody\dev\lalala-fsharp\ApexLexer\obj\Debug\net6.0\ApexLexer.fsproj.AssemblyReference.cache
+c:\cygwin64\home\Cody\dev\lalala-fsharp\ApexLexer\obj\Debug\net6.0\ApexLexer.AssemblyInfoInputs.cache
+c:\cygwin64\home\Cody\dev\lalala-fsharp\ApexLexer\obj\Debug\net6.0\ApexLexer.AssemblyInfo.fs
+c:\cygwin64\home\Cody\dev\lalala-fsharp\ApexLexer\obj\Debug\net6.0\ApexLexer.fsproj.CoreCompileInputs.cache
+c:\cygwin64\home\Cody\dev\lalala-fsharp\ApexLexer\obj\Debug\net6.0\ApexLexer.dll
+c:\cygwin64\home\Cody\dev\lalala-fsharp\ApexLexer\obj\Debug\net6.0\ApexLexer.xml
+c:\cygwin64\home\Cody\dev\lalala-fsharp\ApexLexer\obj\Debug\net6.0\ApexLexer.pdb

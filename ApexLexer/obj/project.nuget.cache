@@ -1,0 +1,10 @@
+{
+  "version": 2,
+  "dgSpecHash": "FWbJgQnEUpzfj5SApvpQgBs5a3XgRPSIncUb8XKa+9f1cgSEpPYycA/huzPGxuUTadm0ixbL5lDdva+g73yZmg==",
+  "success": true,
+  "projectFilePath": "C:\\cygwin64\\home\\Cody\\dev\\lalala-fsharp\\ApexLexer\\ApexLexer.fsproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\Cody\\.nuget\\packages\\fsharp.core\\6.0.7\\fsharp.core.6.0.7.nupkg.sha512"
+  ],
+  "logs": []
+}
