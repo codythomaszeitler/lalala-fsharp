@@ -112,3 +112,4 @@ c:\cygwin64\home\Cody\dev\lalala-fsharp\ApexLexer.Tests\obj\Debug\net6.0\ApexLex
 c:\cygwin64\home\Cody\dev\lalala-fsharp\ApexLexer.Tests\obj\Debug\net6.0\ApexLexer.Tests.dll
 c:\cygwin64\home\Cody\dev\lalala-fsharp\ApexLexer.Tests\obj\Debug\net6.0\ApexLexer.Tests.pdb
 c:\cygwin64\home\Cody\dev\lalala-fsharp\ApexLexer.Tests\obj\Debug\net6.0\ApexLexer.Tests.genruntimeconfig.cache
+C:\cygwin64\home\Cody\dev\lalala-fsharp\ApexLexer.Tests\bin\Debug\net6.0\FsLexYacc.Runtime.dll
