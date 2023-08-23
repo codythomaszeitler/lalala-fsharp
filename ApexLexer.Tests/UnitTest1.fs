@@ -12,6 +12,7 @@ let Setup () =
 
 [<Test>]
 let Test4 () =
-    let input = "(1 + 2) - 3"
+    let input = "2"
     let lexbuf = LexBuffer<char>.FromString input
-    Assert.AreEqual(0, lexbuf.StartPos.pos_lnum)
+    let output = Parser.parse Lexer.tokenize lexbuf
+    Assert.AreEqual("2", string output)
