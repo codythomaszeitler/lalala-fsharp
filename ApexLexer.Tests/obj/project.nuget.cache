@@ -1,11 +1,13 @@
 {
   "version": 2,
-  "dgSpecHash": "cJaXgH1W3r0GgpBnz8V/228+7JO8ED1GM94aXwQ6SeNZfms532NiZ5SZfCfXzjEGKWruihtfZBas9RLfBUJs+w==",
+  "dgSpecHash": "lhSxfDuo3vUEVEVYpiJfsPBgdEP+t4luH3PyN4ZS/D/JV+jzkIXN2mhV5DMHxasqL98YyJ+50ebduIjV/MSrcw==",
   "success": true,
   "projectFilePath": "C:\\cygwin64\\home\\Cody\\dev\\lalala-fsharp\\ApexLexer.Tests\\ApexLexer.Tests.fsproj",
   "expectedPackageFiles": [
     "C:\\Users\\Cody\\.nuget\\packages\\coverlet.collector\\3.1.2\\coverlet.collector.3.1.2.nupkg.sha512",
     "C:\\Users\\Cody\\.nuget\\packages\\fsharp.core\\6.0.7\\fsharp.core.6.0.7.nupkg.sha512",
+    "C:\\Users\\Cody\\.nuget\\packages\\fslexyacc\\11.2.0\\fslexyacc.11.2.0.nupkg.sha512",
+    "C:\\Users\\Cody\\.nuget\\packages\\fslexyacc.runtime\\11.2.0\\fslexyacc.runtime.11.2.0.nupkg.sha512",
     "C:\\Users\\Cody\\.nuget\\packages\\microsoft.codecoverage\\17.1.0\\microsoft.codecoverage.17.1.0.nupkg.sha512",
     "C:\\Users\\Cody\\.nuget\\packages\\microsoft.csharp\\4.0.1\\microsoft.csharp.4.0.1.nupkg.sha512",
     "C:\\Users\\Cody\\.nuget\\packages\\microsoft.net.test.sdk\\17.1.0\\microsoft.net.test.sdk.17.1.0.nupkg.sha512",
