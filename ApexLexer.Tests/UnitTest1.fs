@@ -12,3 +12,6 @@ let Test1 () =
 
 let Test2 () = 
     Assert.AreEqual(2, Say.add 1 1)
+
+let Test3 () = 
+    Assert.AreEqual(5, Say.add 2 3 )
