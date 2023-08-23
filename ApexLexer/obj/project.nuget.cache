@@ -1,10 +1,12 @@
 {
   "version": 2,
-  "dgSpecHash": "FWbJgQnEUpzfj5SApvpQgBs5a3XgRPSIncUb8XKa+9f1cgSEpPYycA/huzPGxuUTadm0ixbL5lDdva+g73yZmg==",
+  "dgSpecHash": "/+U6kyAta0W0xV9StZ1SVVFVRvTr5NUiTm0kzomZzRfJ0xENfekjpwv1rpbdWbqQS6EQ8PVj8OzfOP9Ez991nw==",
   "success": true,
   "projectFilePath": "C:\\cygwin64\\home\\Cody\\dev\\lalala-fsharp\\ApexLexer\\ApexLexer.fsproj",
   "expectedPackageFiles": [
-    "C:\\Users\\Cody\\.nuget\\packages\\fsharp.core\\6.0.7\\fsharp.core.6.0.7.nupkg.sha512"
+    "C:\\Users\\Cody\\.nuget\\packages\\fsharp.core\\6.0.7\\fsharp.core.6.0.7.nupkg.sha512",
+    "C:\\Users\\Cody\\.nuget\\packages\\fslexyacc\\11.2.0\\fslexyacc.11.2.0.nupkg.sha512",
+    "C:\\Users\\Cody\\.nuget\\packages\\fslexyacc.runtime\\11.2.0\\fslexyacc.runtime.11.2.0.nupkg.sha512"
   ],
   "logs": []
 }
