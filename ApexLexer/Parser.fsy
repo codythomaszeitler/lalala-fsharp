@@ -1,22 +1,37 @@
 %{
-let getOp op = 
-    match op with 
-    | "+" -> ( + )
-    | "-" -> ( - )
-    | "/" -> ( / )
-    | "*" -> ( * )
-    | _ -> failwith "unknown operator"
 %}
 
-%token <int> Number
-%token <string> OP
-%token EOF LPAREN RPAREN
-%start parse
-%type <int> parse
+%token <int> INT
+%token PLUS
+%token MULT
+%token ABSTRACT
+%token AFTER
+
+%token PUBLIC
+%token PRIVATE
+%token STATIC
+
+%token CLASS
+%token LEFT_BRACE 
+%token RIGHT_BRACE
+%token LEFT_PAREN
+%token RIGHT_PAREN
+%token SEMI
+%token RETURN
+%token COMMA
+%token DOT
+%token ASSIGN
+%token ATSIGN
+%token <string> ID
+%token EOF
+
+
+%type <string> compilationUnit
+%start compilationUnit
+
 %%
+compilationUnit: 
+    |  { "Nothing to see here" }   
+;
 
-parse: expr EOF        	     { $1 }
-
-expr: Number                 { $1 }
-    | expr OP expr           { $1 |> (getOp $2) <| $3 }
-    | LPAREN expr RPAREN     { $2 }
+%%
