@@ -1,4 +1,4 @@
 module Lexer
 
-/// Rule tokenize
-val tokenize: lexbuf: LexBuffer<char> -> token
+/// Rule read_token
+val read_token: lexbuf: LexBuffer<char> -> token

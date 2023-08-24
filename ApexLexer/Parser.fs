@@ -5,156 +5,205 @@ open FSharp.Text.Lexing
 open FSharp.Text.Parsing.ParseHelpers
 # 1 "Parser.fsy"
 
-let getOp op = 
-    match op with 
-    | "+" -> ( + )
-    | "-" -> ( - )
-    | "/" -> ( / )
-    | "*" -> ( * )
-    | _ -> failwith "unknown operator"
 
-# 16 "Parser.fs"
+# 9 "Parser.fs"
 // This type is the type of tokens accepted by the parser
 type token = 
   | EOF
-  | LPAREN
-  | RPAREN
-  | OP of (string)
-  | Number of (int)
+  | ID of (string)
+  | ATSIGN
+  | ASSIGN
+  | DOT
+  | COMMA
+  | RETURN
+  | SEMI
+  | RIGHT_PAREN
+  | LEFT_PAREN
+  | RIGHT_BRACE
+  | LEFT_BRACE
+  | CLASS
+  | STATIC
+  | PRIVATE
+  | PUBLIC
+  | AFTER
+  | ABSTRACT
+  | MULT
+  | PLUS
+  | INT of (int)
 // This type is used to give symbolic names to token indexes, useful for error messages
 type tokenId = 
     | TOKEN_EOF
-    | TOKEN_LPAREN
-    | TOKEN_RPAREN
-    | TOKEN_OP
-    | TOKEN_Number
+    | TOKEN_ID
+    | TOKEN_ATSIGN
+    | TOKEN_ASSIGN
+    | TOKEN_DOT
+    | TOKEN_COMMA
+    | TOKEN_RETURN
+    | TOKEN_SEMI
+    | TOKEN_RIGHT_PAREN
+    | TOKEN_LEFT_PAREN
+    | TOKEN_RIGHT_BRACE
+    | TOKEN_LEFT_BRACE
+    | TOKEN_CLASS
+    | TOKEN_STATIC
+    | TOKEN_PRIVATE
+    | TOKEN_PUBLIC
+    | TOKEN_AFTER
+    | TOKEN_ABSTRACT
+    | TOKEN_MULT
+    | TOKEN_PLUS
+    | TOKEN_INT
     | TOKEN_end_of_input
     | TOKEN_error
 // This type is used to give symbolic names to token indexes, useful for error messages
 type nonTerminalId = 
-    | NONTERM__startparse
-    | NONTERM_parse
-    | NONTERM_expr
+    | NONTERM__startcompilationUnit
+    | NONTERM_compilationUnit
 
 // This function maps tokens to integer indexes
 let tagOfToken (t:token) = 
   match t with
   | EOF  -> 0 
-  | LPAREN  -> 1 
-  | RPAREN  -> 2 
-  | OP _ -> 3 
-  | Number _ -> 4 
+  | ID _ -> 1 
+  | ATSIGN  -> 2 
+  | ASSIGN  -> 3 
+  | DOT  -> 4 
+  | COMMA  -> 5 
+  | RETURN  -> 6 
+  | SEMI  -> 7 
+  | RIGHT_PAREN  -> 8 
+  | LEFT_PAREN  -> 9 
+  | RIGHT_BRACE  -> 10 
+  | LEFT_BRACE  -> 11 
+  | CLASS  -> 12 
+  | STATIC  -> 13 
+  | PRIVATE  -> 14 
+  | PUBLIC  -> 15 
+  | AFTER  -> 16 
+  | ABSTRACT  -> 17 
+  | MULT  -> 18 
+  | PLUS  -> 19 
+  | INT _ -> 20 
 
 // This function maps integer indexes to symbolic token ids
 let tokenTagToTokenId (tokenIdx:int) = 
   match tokenIdx with
   | 0 -> TOKEN_EOF 
-  | 1 -> TOKEN_LPAREN 
-  | 2 -> TOKEN_RPAREN 
-  | 3 -> TOKEN_OP 
-  | 4 -> TOKEN_Number 
-  | 7 -> TOKEN_end_of_input
-  | 5 -> TOKEN_error
+  | 1 -> TOKEN_ID 
+  | 2 -> TOKEN_ATSIGN 
+  | 3 -> TOKEN_ASSIGN 
+  | 4 -> TOKEN_DOT 
+  | 5 -> TOKEN_COMMA 
+  | 6 -> TOKEN_RETURN 
+  | 7 -> TOKEN_SEMI 
+  | 8 -> TOKEN_RIGHT_PAREN 
+  | 9 -> TOKEN_LEFT_PAREN 
+  | 10 -> TOKEN_RIGHT_BRACE 
+  | 11 -> TOKEN_LEFT_BRACE 
+  | 12 -> TOKEN_CLASS 
+  | 13 -> TOKEN_STATIC 
+  | 14 -> TOKEN_PRIVATE 
+  | 15 -> TOKEN_PUBLIC 
+  | 16 -> TOKEN_AFTER 
+  | 17 -> TOKEN_ABSTRACT 
+  | 18 -> TOKEN_MULT 
+  | 19 -> TOKEN_PLUS 
+  | 20 -> TOKEN_INT 
+  | 23 -> TOKEN_end_of_input
+  | 21 -> TOKEN_error
   | _ -> failwith "tokenTagToTokenId: bad token"
 
 /// This function maps production indexes returned in syntax errors to strings representing the non terminal that would be produced by that production
 let prodIdxToNonTerminal (prodIdx:int) = 
   match prodIdx with
-    | 0 -> NONTERM__startparse 
-    | 1 -> NONTERM_parse 
-    | 2 -> NONTERM_expr 
-    | 3 -> NONTERM_expr 
-    | 4 -> NONTERM_expr 
+    | 0 -> NONTERM__startcompilationUnit 
+    | 1 -> NONTERM_compilationUnit 
     | _ -> failwith "prodIdxToNonTerminal: bad production index"
 
-let _fsyacc_endOfInputTag = 7 
-let _fsyacc_tagOfErrorTerminal = 5
+let _fsyacc_endOfInputTag = 23 
+let _fsyacc_tagOfErrorTerminal = 21
 
 // This function gets the name of a token as a string
 let token_to_string (t:token) = 
   match t with 
   | EOF  -> "EOF" 
-  | LPAREN  -> "LPAREN" 
-  | RPAREN  -> "RPAREN" 
-  | OP _ -> "OP" 
-  | Number _ -> "Number" 
+  | ID _ -> "ID" 
+  | ATSIGN  -> "ATSIGN" 
+  | ASSIGN  -> "ASSIGN" 
+  | DOT  -> "DOT" 
+  | COMMA  -> "COMMA" 
+  | RETURN  -> "RETURN" 
+  | SEMI  -> "SEMI" 
+  | RIGHT_PAREN  -> "RIGHT_PAREN" 
+  | LEFT_PAREN  -> "LEFT_PAREN" 
+  | RIGHT_BRACE  -> "RIGHT_BRACE" 
+  | LEFT_BRACE  -> "LEFT_BRACE" 
+  | CLASS  -> "CLASS" 
+  | STATIC  -> "STATIC" 
+  | PRIVATE  -> "PRIVATE" 
+  | PUBLIC  -> "PUBLIC" 
+  | AFTER  -> "AFTER" 
+  | ABSTRACT  -> "ABSTRACT" 
+  | MULT  -> "MULT" 
+  | PLUS  -> "PLUS" 
+  | INT _ -> "INT" 
 
 // This function gets the data carried by a token as an object
 let _fsyacc_dataOfToken (t:token) = 
   match t with 
   | EOF  -> (null : System.Object) 
-  | LPAREN  -> (null : System.Object) 
-  | RPAREN  -> (null : System.Object) 
-  | OP _fsyacc_x -> Microsoft.FSharp.Core.Operators.box _fsyacc_x 
-  | Number _fsyacc_x -> Microsoft.FSharp.Core.Operators.box _fsyacc_x 
-let _fsyacc_gotos = [| 0us;65535us;1us;65535us;0us;1us;3us;65535us;0us;2us;7us;5us;8us;6us;|]
-let _fsyacc_sparseGotoTableRowOffsets = [|0us;1us;3us;|]
-let _fsyacc_stateToProdIdxsTableElements = [| 1us;0us;1us;0us;2us;1us;3us;1us;1us;1us;2us;2us;3us;3us;2us;3us;4us;1us;3us;1us;4us;1us;4us;|]
-let _fsyacc_stateToProdIdxsTableRowOffsets = [|0us;2us;4us;7us;9us;11us;14us;17us;19us;21us;|]
-let _fsyacc_action_rows = 10
-let _fsyacc_actionTableElements = [|2us;32768us;1us;8us;4us;4us;0us;49152us;2us;32768us;0us;3us;3us;7us;0us;16385us;0us;16386us;1us;16387us;3us;7us;2us;32768us;2us;9us;3us;7us;2us;32768us;1us;8us;4us;4us;2us;32768us;1us;8us;4us;4us;0us;16388us;|]
-let _fsyacc_actionTableRowOffsets = [|0us;3us;4us;7us;8us;9us;11us;14us;17us;20us;|]
-let _fsyacc_reductionSymbolCounts = [|1us;2us;1us;3us;3us;|]
-let _fsyacc_productionToNonTerminalTable = [|0us;1us;2us;2us;2us;|]
-let _fsyacc_immediateActions = [|65535us;49152us;65535us;16385us;16386us;65535us;65535us;65535us;65535us;16388us;|]
+  | ID _fsyacc_x -> Microsoft.FSharp.Core.Operators.box _fsyacc_x 
+  | ATSIGN  -> (null : System.Object) 
+  | ASSIGN  -> (null : System.Object) 
+  | DOT  -> (null : System.Object) 
+  | COMMA  -> (null : System.Object) 
+  | RETURN  -> (null : System.Object) 
+  | SEMI  -> (null : System.Object) 
+  | RIGHT_PAREN  -> (null : System.Object) 
+  | LEFT_PAREN  -> (null : System.Object) 
+  | RIGHT_BRACE  -> (null : System.Object) 
+  | LEFT_BRACE  -> (null : System.Object) 
+  | CLASS  -> (null : System.Object) 
+  | STATIC  -> (null : System.Object) 
+  | PRIVATE  -> (null : System.Object) 
+  | PUBLIC  -> (null : System.Object) 
+  | AFTER  -> (null : System.Object) 
+  | ABSTRACT  -> (null : System.Object) 
+  | MULT  -> (null : System.Object) 
+  | PLUS  -> (null : System.Object) 
+  | INT _fsyacc_x -> Microsoft.FSharp.Core.Operators.box _fsyacc_x 
+let _fsyacc_gotos = [| 0us;65535us;1us;65535us;0us;1us;|]
+let _fsyacc_sparseGotoTableRowOffsets = [|0us;1us;|]
+let _fsyacc_stateToProdIdxsTableElements = [| 1us;0us;1us;0us;|]
+let _fsyacc_stateToProdIdxsTableRowOffsets = [|0us;2us;|]
+let _fsyacc_action_rows = 2
+let _fsyacc_actionTableElements = [|0us;16385us;0us;49152us;|]
+let _fsyacc_actionTableRowOffsets = [|0us;1us;|]
+let _fsyacc_reductionSymbolCounts = [|1us;0us;|]
+let _fsyacc_productionToNonTerminalTable = [|0us;1us;|]
+let _fsyacc_immediateActions = [|65535us;49152us;|]
 let _fsyacc_reductions = lazy [|
-# 101 "Parser.fs"
+# 186 "Parser.fs"
         (fun (parseState : FSharp.Text.Parsing.IParseState) ->
-            let _1 = parseState.GetInput(1) :?> int in
+            let _1 = parseState.GetInput(1) :?> string in
             Microsoft.FSharp.Core.Operators.box
                 (
                    (
                       raise (FSharp.Text.Parsing.Accept(Microsoft.FSharp.Core.Operators.box _1))
                    )
-                 : 'gentype__startparse));
-# 110 "Parser.fs"
+                 : 'gentype__startcompilationUnit));
+# 195 "Parser.fs"
         (fun (parseState : FSharp.Text.Parsing.IParseState) ->
-            let _1 = parseState.GetInput(1) :?> 'gentype_expr in
             Microsoft.FSharp.Core.Operators.box
                 (
                    (
-# 18 "Parser.fsy"
-                                                    _1 
+# 34 "Parser.fsy"
+                              "Nothing to see here" 
                    )
-# 18 "Parser.fsy"
-                 : int));
-# 121 "Parser.fs"
-        (fun (parseState : FSharp.Text.Parsing.IParseState) ->
-            let _1 = parseState.GetInput(1) :?> int in
-            Microsoft.FSharp.Core.Operators.box
-                (
-                   (
-# 20 "Parser.fsy"
-                                                    _1 
-                   )
-# 20 "Parser.fsy"
-                 : 'gentype_expr));
-# 132 "Parser.fs"
-        (fun (parseState : FSharp.Text.Parsing.IParseState) ->
-            let _1 = parseState.GetInput(1) :?> 'gentype_expr in
-            let _2 = parseState.GetInput(2) :?> string in
-            let _3 = parseState.GetInput(3) :?> 'gentype_expr in
-            Microsoft.FSharp.Core.Operators.box
-                (
-                   (
-# 21 "Parser.fsy"
-                                                    _1 |> (getOp _2) <| _3 
-                   )
-# 21 "Parser.fsy"
-                 : 'gentype_expr));
-# 145 "Parser.fs"
-        (fun (parseState : FSharp.Text.Parsing.IParseState) ->
-            let _2 = parseState.GetInput(2) :?> 'gentype_expr in
-            Microsoft.FSharp.Core.Operators.box
-                (
-                   (
-# 22 "Parser.fsy"
-                                                    _2 
-                   )
-# 22 "Parser.fsy"
-                 : 'gentype_expr));
+# 34 "Parser.fsy"
+                 : string));
 |]
-# 157 "Parser.fs"
+# 206 "Parser.fs"
 let tables : FSharp.Text.Parsing.Tables<_> = 
   { reductions = _fsyacc_reductions.Value;
     endOfInputTag = _fsyacc_endOfInputTag;
@@ -173,8 +222,8 @@ let tables : FSharp.Text.Parsing.Tables<_> =
                               match parse_error_rich with 
                               | Some f -> f ctxt
                               | None -> parse_error ctxt.Message);
-    numTerminals = 8;
+    numTerminals = 24;
     productionToNonTerminalTable = _fsyacc_productionToNonTerminalTable  }
 let engine lexer lexbuf startState = tables.Interpret(lexer, lexbuf, startState)
-let parse lexer lexbuf : int =
+let compilationUnit lexer lexbuf : string =
     engine lexer lexbuf 0 :?> _

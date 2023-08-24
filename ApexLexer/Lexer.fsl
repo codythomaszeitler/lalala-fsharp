@@ -1,20 +1,47 @@
-
 {
 open FSharp.Text.Lexing
-open Parser
+open Parser 
 
 let lexeme lexbuf = LexBuffer<_>.LexemeString lexbuf
-}
+
+let keyword_tbl = Map[
+    "public", PUBLIC;
+    "after", AFTER; 
+    "abstract", ABSTRACT;
+    "private", PRIVATE;
+    "static", STATIC;
+    "return", RETURN;
+    "class", CLASS;
+  ]}
 
 let digit = ['0'-'9']
-let operator = ['+' '-' '*' '/']
-let whitespace = [' ' '\t']
+let int = '-'? digit+  (* regex for integers *)
+let ws    = [' ' '\t' '\n']
+let iden =  ['a'-'z''A'-'Z']['a'-'z''A'-'Z''$''_']+
 
-rule tokenize = parse
-| whitespace        { tokenize lexbuf }
-| ['-']?digit+      { Number ( System.Int32.Parse( lexeme lexbuf ) ) }
-| operator          { OP ( lexeme lexbuf ) }
-| '('               { LPAREN }
-| ')'               { RPAREN }
-| eof               { EOF }
-| _                 { lexeme lexbuf |> sprintf "Parsing error: %s" |> failwith }
+rule read_token = 
+    parse 
+    | ws {read_token lexbuf}
+    | int { lexeme lexbuf |> System.Int32.Parse |> INT }
+    | "+" { PLUS }
+    | "*" { MULT }
+    | "@" {ATSIGN}
+    | "{" {LEFT_BRACE}
+    | "}" {RIGHT_BRACE}
+    | "(" {LEFT_PAREN}
+    | ")" {RIGHT_PAREN}
+    | ';' {SEMI}
+    | '.' {DOT}
+    | ',' {COMMA}
+    | '=' {ASSIGN}
+    | eof {EOF}
+    | iden {
+        let s = lexeme lexbuf in 
+        let idOrKeyword = s.ToLower() in 
+        let found = keyword_tbl.TryFind idOrKeyword in 
+        match found with 
+          | Some(x) -> x 
+          | None -> ID(idOrKeyword)
+        
+    }
+    | _ {ID (lexeme lexbuf)}
