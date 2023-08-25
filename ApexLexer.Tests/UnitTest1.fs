@@ -1,18 +1,12 @@
 module ApexLexer.Tests
 
-open FSharp.Text.Lexing
-open Lexer
-open Parser
-
 open NUnit.Framework
 
 [<SetUp>]
-let Setup () =
-    ()
+let Setup () = ()
 
 [<Test>]
-let Test4 () =
-    let input = "2"
-    let lexbuf = LexBuffer<char>.FromString input
-    let output = Parser.parse Lexer.tokenize lexbuf
-    Assert.AreEqual("2", string output)
+let ``it should be able to create a no loc`` () =
+    let location = Location.no_loc
+    let no_location = { line = 0; row = 0; column = 0 }: Location.Location
+    Assert.AreEqual(location, no_location)
