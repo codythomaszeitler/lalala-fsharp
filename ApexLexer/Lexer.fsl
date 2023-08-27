@@ -1,19 +1,10 @@
 {
-open Lexing
-open Apexparser
-exception SyntaxError of string
+open FSharp.Text.Lexing
+open Parser 
 
-let next_line lexbuf =
-  let pos = lexbuf.lex_curr_p in
-  lexbuf.lex_curr_p <-
-    { pos with pos_bol = lexbuf.lex_curr_pos;
-               pos_lnum = pos.pos_lnum + 1
-    }
+let lexeme lexbuf = LexBuffer<_>.LexemeString lexbuf
 
-let keyword_tbl = Hashtbl.create 64  
-
-let _ = List.iter (fun (name, keyword) ->
-    Hashtbl.add keyword_tbl name keyword) [
+let keyword_tbl = Map[
     "public", PUBLIC;
     "after", AFTER; 
     "abstract", ABSTRACT;
@@ -31,7 +22,7 @@ let iden =  ['a'-'z''A'-'Z']['a'-'z''A'-'Z''$''_']+
 rule read_token = 
     parse 
     | ws {read_token lexbuf}
-    | int { INT (int_of_string (Lexing.lexeme lexbuf))}
+    | int { lexeme lexbuf |> System.Int32.Parse |> INT }
     | "+" { PLUS }
     | "*" { MULT }
     | "@" {ATSIGN}
@@ -44,9 +35,13 @@ rule read_token =
     | ',' {COMMA}
     | '=' {ASSIGN}
     | eof {EOF}
-    | iden as s {
-        let idOrKeyword = String.lowercase_ascii s in 
-        try Hashtbl.find keyword_tbl idOrKeyword
-        with Not_found -> ID s
+    | iden {
+        let s = lexeme lexbuf in 
+        let idOrKeyword = s.ToLower() in 
+        let found = keyword_tbl.TryFind idOrKeyword in 
+        match found with 
+          | Some(x) -> x 
+          | None -> ID(idOrKeyword)
+        
     }
-    | _ {ID (Lexing.lexeme lexbuf)}
+    | _ {ID (lexeme lexbuf)}
