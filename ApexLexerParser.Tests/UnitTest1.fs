@@ -1,4 +1,4 @@
-module ApexLexer.Tests
+module ApexLexerParser.Tests
 
 open FSharp.Text.Lexing
 
