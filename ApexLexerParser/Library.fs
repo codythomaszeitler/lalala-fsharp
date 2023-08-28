@@ -8,6 +8,20 @@ module Location =
 module Common =
     type Identifier = Identifier of Location.Location * string
 
+    let build_qualified_name identifiers : Identifier =
+        if List.isEmpty identifiers then failwith("Cannot build qualified name with an empty list of identifiers.")
+        let get_name =
+            function
+            | Identifier(_, name) -> name in
+
+        let rec get_qualified_name_string (identifiers: Identifier list) : string =
+            match identifiers with
+            | h :: [] -> get_name h
+            | h :: t -> get_name h + "." + get_qualified_name_string t
+            | [] -> "" in
+
+        Identifier(Location.no_loc, get_qualified_name_string identifiers)
+
     type Operator =
         | Add of Location.Location
         | Sub of Location.Location
