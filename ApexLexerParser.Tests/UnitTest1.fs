@@ -50,4 +50,5 @@ let ``it should be able to build an identifier from just a single identifier`` (
 
 [<Test>]
 let ``it should throw an exception when an empty list is given to build qualified name`` () =
+    
     Assert.Throws(fun () -> ApexLexerParser.Common.build_qualified_name [] |> ignore) |> ignore

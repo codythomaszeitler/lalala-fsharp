@@ -49,6 +49,38 @@ type tokenId =
 type nonTerminalId = 
     | NONTERM__startcompilationUnit
     | NONTERM_compilationUnit
+    | NONTERM_typeDeclaration
+    | NONTERM_modifier
+    | NONTERM_identifier
+    | NONTERM_classDeclaration
+    | NONTERM_annotationOption
+    | NONTERM_modifierList
+    | NONTERM_classBody
+    | NONTERM_classBodyDeclarationList
+    | NONTERM_classBodyDeclaration
+    | NONTERM_memberDeclaration
+    | NONTERM_fieldDeclaration
+    | NONTERM_variableDeclarators
+    | NONTERM_variableDeclarator
+    | NONTERM_typeRef
+    | NONTERM_typeName
+    | NONTERM_id
+    | NONTERM_methodDeclaration
+    | NONTERM_block
+    | NONTERM_statementList
+    | NONTERM_statement
+    | NONTERM_localVariableDeclarationStatement
+    | NONTERM_localVariableDeclaration
+    | NONTERM_returnStatement
+    | NONTERM_expressionStatement
+    | NONTERM_primary
+    | NONTERM_expression
+    | NONTERM_literal
+    | NONTERM_methodCall
+    | NONTERM_expressions
+    | NONTERM_annotation
+    | NONTERM_qualifiedName
+    | NONTERM_ids
 /// This function maps tokens to integer indexes
 val tagOfToken: token -> int
 
@@ -60,4 +92,4 @@ val prodIdxToNonTerminal: int -> nonTerminalId
 
 /// This function gets the name of a token as a string
 val token_to_string: token -> string
-val compilationUnit : (FSharp.Text.Lexing.LexBuffer<'cty> -> token) -> FSharp.Text.Lexing.LexBuffer<'cty> -> (string) 
+val compilationUnit : (FSharp.Text.Lexing.LexBuffer<'cty> -> token) -> FSharp.Text.Lexing.LexBuffer<'cty> -> (ApexLexerParser.Apex.CompilationUnit) 
