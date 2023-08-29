@@ -26,12 +26,139 @@
 %token EOF
 
 
-%type <string> compilationUnit
+%type <ApexLexerParser.Apex.CompilationUnit> compilationUnit
 %start compilationUnit
 
 %%
 compilationUnit: 
-    |  { "Nothing to see here" }   
+    | typeDeclaration {$1}
 ;
+
+typeDeclaration :
+    |  classDeclaration {$1}
+;
+
+modifier:
+    | PUBLIC {ApexLexerParser.Apex.Modifier.Public(no_loc)}
+    | PRIVATE {ApexLexerParser.Apex.Modifier.Private(no_loc)}
+    | STATIC {ApexLexerParser.Apex.Modifier.Static(no_loc)}
+;
+
+identifier:
+    | ID {ApexLexerParser.Common.Identifier(no_loc, $1 )}
+;
+
+classDeclaration:
+    | CLASS identifier classBody {ApexLexerParser.Apex.CompilationUnit.ClassDeclaration(no_loc, None, [], $2, $3)}
+
+    | annotation; CLASS; identifier; classBody {ApexLexerParser.Apex.CompilationUnit.ClassDeclaration(no_loc, $1, [], $3, $4)}
+
+    | modifierList; CLASS; identifier; classBody {ApexLexerParser.Apex.CompilationUnit.ClassDeclaration(no_loc, None, $1, $3, $4)}
+
+    | annotation; modifierList; CLASS; identifier; classBody {ApexLexerParser.Apex.CompilationUnit.ClassDeclaration(no_loc, $1, $2, $4, $5)}
+;
+
+modifierList:
+    | modifier { [$1] }
+    | modifier modifierList { $2 :: $1 }
+
+classBody:
+    | LEFT_BRACE; classBodyDeclarationList; RIGHT_BRACE {$2}
+;
+
+classBodyDeclarationList:  
+    | classBodyDeclaration { [$1] }
+    | classBodyDeclaration classBodyDeclarationList { $2 :: $1 }
+
+classBodyDeclaration:
+    | memberDeclaration {$1}
+;
+
+memberDeclaration:
+    | fieldDeclaration {$1}
+    | methodDeclaration {$1}
+;
+
+fieldDeclaration
+    : annotation? modifier* typeRef variableDeclarators SEMI {ApexLexerParser.Apex.Decl.FieldDeclaration(no_loc, $1, $2, $3, $4)}
+    ;
+
+variableDeclarators
+    : separated_nonempty_list(COMMA, variableDeclarator) {$1} 
+    ;
+
+variableDeclarator
+    : id {ApexLexerParser.Apex.VariableDecl.VariableDecl(no_loc, $1)} //(ASSIGN expression)?
+    ;
+
+typeRef:
+    | typeName {$1} // (DOT typeName)* arraySubscripts
+;
+
+typeName:
+    | idd = id { match idd with ApexLexerParser.Common.Identifier.Identifier(_, name) ->  ApexLexerParser.Apex.Type.Type(no_loc, name)}
+;
+
+id:  
+    | iden = ID {ApexLexerParser.Common.Identifier.Identifier(no_loc, iden)}
+;
+
+methodDeclaration
+    : anno=annotation? modis=modifier* apexType = typeRef id = id LEFT_PAREN RIGHT_PAREN stmts = block  {ApexLexerParser.Apex.Decl.MethodDeclaration(no_loc, anno, modis, apexType, id, stmts)}
+;
+
+block :
+    | LEFT_BRACE stmts = statement* RIGHT_BRACE {stmts}
+;
+
+statement:
+    | localVarDeclStmt = localVariableDeclarationStatement {localVarDeclStmt}
+    | returnStmt = returnStatement {returnStmt}
+    | exprStmt = expressionStatement {exprStmt}
+;
+
+localVariableDeclarationStatement
+    : localVarDecl = localVariableDeclaration SEMI {ApexLexerParser.Apex.Stmt.LocalVarDeclStmt(no_loc,localVarDecl)}
+;
+
+localVariableDeclaration
+    : modi = modifier apexType = typeRef decls = variableDeclarators {ApexLexerParser.Apex.LocalVarDecl.LocalVarDecl(no_loc, modi, apexType, decls)}
+;
+
+returnStatement
+    : RETURN expr = expression SEMI {ApexLexerParser.Apex.Stmt.ReturnStmt(no_loc, expr)}
+;
+
+expressionStatement
+    : expr = expression SEMI {ApexLexerParser.Apex.Stmt.ExprStmt(no_loc, expr)}
+;
+
+primary
+    : 
+    | id = id {Expr.Id(no_loc, id)}
+;
+
+expression
+    : expr = primary {expr}
+    | expr = methodCall{expr}
+    | expr = literal{expr}
+;
+
+literal
+    : num = INT {ApexLexerParser.Common.Expr.IntegerLiteral(no_loc, num)}
+;
+
+methodCall 
+    : id = qualifiedName LEFT_PAREN exprs = separated_nonempty_list(COMMA, expression) RIGHT_PAREN {ApexLexerParser.Common.Expr.ApexLexerParser.ApexMethodCall(no_loc, id, exprs)}
+;
+
+annotation
+    : ATSIGN ID {ApexLexerParser.Apex.Annotation.IsTest(no_loc)}
+;
+
+qualifiedName
+    : ids = separated_nonempty_list(DOT, id) {ApexLexerParser.Common.build_qualified_name(ids)}
+;
+
 
 %%

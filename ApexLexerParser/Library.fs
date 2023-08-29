@@ -1,4 +1,4 @@
-﻿namespace ApexLexer
+﻿namespace ApexLexerParser
 
 module Location =
     type Location = { line: int; row: int; column: int }
@@ -79,3 +79,10 @@ module Apex =
             Type *
             Common.Identifier *
             Stmt list
+    type CompilationUnit =
+        | ClassDeclaration of
+            Location.Location
+            * Annotation option
+            * Modifier list
+            * Common.Identifier
+            * Decl list

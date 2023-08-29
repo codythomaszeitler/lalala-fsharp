@@ -27,27 +27,27 @@ let ``it should be able to create a no loc`` () =
 [<Test>]
 let ``it should be to build an identifier from a set of identifiers`` () =
     // Foo.Bar.CONSTANT
-    let fooIdentifier = ApexLexer.Common.Identifier(ApexLexer.Location.no_loc, "Foo")
-    let barIdentifier = ApexLexer.Common.Identifier(ApexLexer.Location.no_loc, "Bar")
+    let fooIdentifier = ApexLexerParser.Common.Identifier(ApexLexerParser.Location.no_loc, "Foo")
+    let barIdentifier = ApexLexerParser.Common.Identifier(ApexLexerParser.Location.no_loc, "Bar")
 
     let constantIdentifier =
-        ApexLexer.Common.Identifier(ApexLexer.Location.no_loc, "CONSTANT")
+        ApexLexerParser.Common.Identifier(ApexLexerParser.Location.no_loc, "CONSTANT")
 
     let expected =
-        ApexLexer.Common.Identifier(ApexLexer.Location.no_loc, "Foo.Bar.CONSTANT")
+        ApexLexerParser.Common.Identifier(ApexLexerParser.Location.no_loc, "Foo.Bar.CONSTANT")
 
     let actual =
-        ApexLexer.Common.build_qualified_name ([ fooIdentifier; barIdentifier; constantIdentifier ])
+        ApexLexerParser.Common.build_qualified_name ([ fooIdentifier; barIdentifier; constantIdentifier ])
 
     Assert.AreEqual(expected, actual)
 
 [<Test>]
 let ``it should be able to build an identifier from just a single identifier`` () =
-    let fooIdentifier = ApexLexer.Common.Identifier(ApexLexer.Location.no_loc, "Foo");
+    let fooIdentifier = ApexLexerParser.Common.Identifier(ApexLexerParser.Location.no_loc, "Foo");
     let expected = fooIdentifier
 
-    Assert.AreEqual(expected, ApexLexer.Common.build_qualified_name [fooIdentifier])
+    Assert.AreEqual(expected, ApexLexerParser.Common.build_qualified_name [fooIdentifier])
 
 [<Test>]
 let ``it should throw an exception when an empty list is given to build qualified name`` () =
-    Assert.Throws(fun () -> ApexLexer.Common.build_qualified_name [] |> ignore) |> ignore
+    Assert.Throws(fun () -> ApexLexerParser.Common.build_qualified_name [] |> ignore) |> ignore
