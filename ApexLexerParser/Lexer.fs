@@ -144,18 +144,19 @@ and read_token  lexbuf =
 # 38 "Lexer.fsl"
                            
                        let idOrKeyword = lexeme lexbuf in 
-                       let found = keyword_tbl.TryFind idOrKeyword in 
+                       let asLowercase = idOrKeyword.ToLower() in
+                       let found = keyword_tbl.TryFind asLowercase in 
                        match found with 
                          | Some(x) -> x 
                          | None -> ID(idOrKeyword)
                        
                    
-# 153 "Lexer.fs"
+# 154 "Lexer.fs"
           )
   | 15 -> ( 
-# 46 "Lexer.fsl"
+# 47 "Lexer.fsl"
                         ID (lexeme lexbuf)
-# 158 "Lexer.fs"
+# 159 "Lexer.fs"
           )
   | _ -> failwith "read_token"
 

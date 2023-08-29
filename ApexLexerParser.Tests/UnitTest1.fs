@@ -55,6 +55,36 @@ let ``it should be able to parse method decl within class`` () =
     Assert.AreEqual(expected, parser)
 
 [<Test>]
+let ``it should be able to parse method decl within class (non-case sensitive)`` () =
+    let rawString =
+        "Public class Foo{\
+        public Integer bar() {\
+            return 5;\
+        }\
+    }"
+
+    let lexbuf = LexBuffer<char>.FromString rawString
+    let parser = Parser.compilationUnit Lexer.read_token lexbuf
+
+    let expected =
+        Apex.CompilationUnit.ClassDeclaration(
+            Location.no_loc,
+            None,
+            [ Apex.Modifier.Public(Location.no_loc) ],
+            Common.Identifier(Location.no_loc, "Foo"),
+            [ Apex.MethodDeclaration(
+                  Location.no_loc,
+                  None,
+                  [ Apex.Modifier.Public(Location.no_loc) ],
+                  Apex.Type(Location.no_loc, "Integer"),
+                  Common.Identifier(Location.no_loc, "bar"),
+                  [ Apex.Stmt.ReturnStmt(Location.no_loc, Common.Expr.IntegerLiteral(Location.no_loc, 5)) ]
+              ) ]
+        )
+
+    Assert.AreEqual(expected, parser)
+
+[<Test>]
 let ``it should be able to create a no loc`` () =
     let rawString = "public class Foo{}"
 
