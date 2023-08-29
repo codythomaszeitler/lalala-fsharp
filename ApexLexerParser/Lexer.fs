@@ -143,20 +143,19 @@ and read_token  lexbuf =
   | 14 -> ( 
 # 38 "Lexer.fsl"
                            
-                       let s = lexeme lexbuf in 
-                       let idOrKeyword = s.ToLower() in 
+                       let idOrKeyword = lexeme lexbuf in 
                        let found = keyword_tbl.TryFind idOrKeyword in 
                        match found with 
                          | Some(x) -> x 
                          | None -> ID(idOrKeyword)
                        
                    
-# 154 "Lexer.fs"
+# 153 "Lexer.fs"
           )
   | 15 -> ( 
-# 47 "Lexer.fsl"
+# 46 "Lexer.fsl"
                         ID (lexeme lexbuf)
-# 159 "Lexer.fs"
+# 158 "Lexer.fs"
           )
   | _ -> failwith "read_token"
 

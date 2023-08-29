@@ -36,8 +36,7 @@ rule read_token =
     | '=' {ASSIGN}
     | eof {EOF}
     | iden {
-        let s = lexeme lexbuf in 
-        let idOrKeyword = s.ToLower() in 
+        let idOrKeyword = lexeme lexbuf in 
         let found = keyword_tbl.TryFind idOrKeyword in 
         match found with 
           | Some(x) -> x 

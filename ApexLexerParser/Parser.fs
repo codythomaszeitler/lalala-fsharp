@@ -545,7 +545,7 @@ let _fsyacc_reductions = lazy [|
                 (
                    (
 # 101 "Parser.fsy"
-                                ApexLexerParser.Apex.Type(ApexLexerParser.Location.no_loc, "temporary type name")
+                                match _1 with ApexLexerParser.Common.Identifier(_, name) -> ApexLexerParser.Apex.Type(ApexLexerParser.Location.no_loc, name)
                    )
 # 101 "Parser.fsy"
                  : 'gentype_typeName));

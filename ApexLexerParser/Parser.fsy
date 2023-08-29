@@ -98,7 +98,7 @@ typeRef:
 
 typeName:
     // match $1 with ApexLexerParser.Common.Identifier.Identifier(_, name) ->  ApexLexerParser.Apex.Type.ReturnType(ApexLexerParser.Location.no_loc, name)
-    | id { ApexLexerParser.Apex.Type(ApexLexerParser.Location.no_loc, "temporary type name")}
+    | id { match $1 with ApexLexerParser.Common.Identifier(_, name) -> ApexLexerParser.Apex.Type(ApexLexerParser.Location.no_loc, name)}
 ;
 
 id:  
