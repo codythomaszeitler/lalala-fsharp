@@ -20,7 +20,7 @@
           "reveal": "silent"
         },
         "options": {
-          "cwd": "${workspaceFolder}/ApexLexer.Tests"
+          "cwd": "${workspaceFolder}/ApexLexerParser.Tests"
         },
         "problemMatcher": "$msCompile"
       },
@@ -34,7 +34,7 @@
           "/consoleloggerparameters:NoSummary"
         ],
         "options": {
-          "cwd": "${workspaceFolder}/ApexLexer.Tests",
+          "cwd": "${workspaceFolder}/ApexLexerParser.Tests",
         },
         "problemMatcher": "$msCompile"
       },
@@ -48,7 +48,7 @@
           "/consoleloggerparameters:NoSummary"
         ],
         "options": {
-          "cwd": "${workspaceFolder}/ApexLexer.Tests",
+          "cwd": "${workspaceFolder}/ApexLexerParser.Tests",
           "env": {
             "VSTEST_HOST_DEBUG": "1"
           }
