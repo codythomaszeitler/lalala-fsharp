@@ -66,6 +66,7 @@ classBody:
 
 classBodyDeclarationList:  
     | { [] }
+    | classBodyDeclaration { [$1] }
     | classBodyDeclaration classBodyDeclarationList { $1 :: $2 }
 
 classBodyDeclaration:
