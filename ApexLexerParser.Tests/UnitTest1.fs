@@ -18,8 +18,38 @@ let ``it should be able to parse simple empty class defintion`` () =
             Location.no_loc,
             None,
             [ Apex.Modifier.Public(Location.no_loc) ],
-            Common.Identifier(Location.no_loc, "foo"),
+            Common.Identifier(Location.no_loc, "Foo"),
             []
+        )
+
+    Assert.AreEqual(expected, parser)
+
+[<Test>]
+let ``it should be able to parse method decl within class`` () =
+    let rawString =
+        "public class Foo{\
+        public Integer bar() {\
+            return 5;\
+        }\
+    }"
+
+    let lexbuf = LexBuffer<char>.FromString rawString
+    let parser = Parser.compilationUnit Lexer.read_token lexbuf
+
+    let expected =
+        Apex.CompilationUnit.ClassDeclaration(
+            Location.no_loc,
+            None,
+            [ Apex.Modifier.Public(Location.no_loc) ],
+            Common.Identifier(Location.no_loc, "Foo"),
+            [ Apex.MethodDeclaration(
+                  Location.no_loc,
+                  None,
+                  [ Apex.Modifier.Public(Location.no_loc) ],
+                  Apex.Type(Location.no_loc, "Integer"),
+                  Common.Identifier(Location.no_loc, "bar"),
+                  [ Apex.Stmt.ReturnStmt(Location.no_loc, Common.Expr.IntegerLiteral(Location.no_loc, 5)) ]
+              ) ]
         )
 
     Assert.AreEqual(expected, parser)
@@ -37,7 +67,7 @@ let ``it should be able to create a no loc`` () =
 
     Assert.AreEqual(Parser.PUBLIC, shouldBePublic)
     Assert.AreEqual(Parser.CLASS, shouldBeClass)
-    Assert.AreEqual(Parser.ID("foo"), shouldBeFoo)
+    Assert.AreEqual(Parser.ID("Foo"), shouldBeFoo)
     Assert.AreEqual(Parser.LEFT_BRACE, shouldBeLeftFancyBracket)
     Assert.AreEqual(Parser.RIGHT_BRACE, shouldBeRightFancyBracket)
 
